@@ -47,5 +47,12 @@ spec:
             secretKeyRef:
               name: db-cred
               key: password
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: server-port
+          initialDelaySeconds: 3
+          periodSeconds: 3
         ports:
-        - containerPort: 8090
+        - name: server-port
+          containerPort: 8090
