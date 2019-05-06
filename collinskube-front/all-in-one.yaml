@@ -3,10 +3,9 @@ kind: Service
 metadata:
   name: collinskube-front
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
-    - nodePort: 31317
-      port: 80
+    - port: 80
       protocol: TCP
       targetPort: 80
   selector:
