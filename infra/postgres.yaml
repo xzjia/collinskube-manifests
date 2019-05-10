@@ -36,7 +36,7 @@ spec:
             - name: POSTGRES_PASSWORD
               value: postgres
             - name: POSTGRES_DB
-              value: beyondfitter
+              value: collinskube
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata
           ports:

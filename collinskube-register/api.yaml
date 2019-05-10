@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: collinskube-register-api
+spec:
+  type: LoadBalancer
+  ports:
+  - name: collinskube-register-api
+    port: 80
+    targetPort: 8060
+    protocol: TCP
+  selector:
+    app: register-api
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: collinskube-register-api
+  labels:
+    app: register-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: register-api
+  template:
+    metadata:
+      labels:
+        app: register-api
+    spec:
+      containers:
+      - name: collinskube-register-api
+        image: xzjia/collinskube-register-api:0.1
+        env:
+        - name: KAFKA_BROKER
+          value: "infra-cp-kafka"
+        ports:
+        - name: server-port
+          containerPort: 8060
