@@ -1,3 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: front-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+  - host: collinskube.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: collinskube-front
+          servicePort: 80
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -30,6 +47,6 @@ spec:
     spec:
       containers:
       - name: collinskube-front
-        image: xzjia/collinskube-front:v0.0.1
+        image: xzjia/collinskube-front:0.1
         ports:
         - containerPort: 80
