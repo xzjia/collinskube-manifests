@@ -8,6 +8,7 @@ spec:
   - name: postgres-port
     port: 5432
     targetPort: 5432
+    nodePort: 30432
     protocol: TCP
   selector:
     infra: postgres
@@ -45,10 +46,14 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: pg-data
+            - name: postgres-initdb
+              mountPath: /docker-entrypoint-initdb.d
       volumes:
         - name: pg-data
-          persistentVolumeClaim:
-            claimName: postgres-pvc
+          emptyDir: {}
+        - name: postgres-initdb
+          configMap:
+            name: postgres-initdb-config
 
 ---
 apiVersion: v1

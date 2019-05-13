@@ -1,0 +1,1 @@
+CREATE TABLE friends (id INT, name VARCHAR(256), age INT, gender VARCHAR(3));

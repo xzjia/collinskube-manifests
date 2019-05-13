@@ -10,5 +10,10 @@ $ helm install --set cp-schema-registry.enabled=false,cp-kafka-rest.enabled=fals
 
 ## Postgres
 
+```bash
+$ kubectl create configmap postgres-initdb-config --from-file=00-schema.sql=infra/00-schema.sql,infra/01-data.sql -o yaml --dry-run | kubectl apply -f -
+$ kubectl apply -f infra/postgres.yaml
+
+```
 
 
