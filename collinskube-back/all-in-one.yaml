@@ -19,6 +19,7 @@ kind: Service
 metadata:
   name: collinskube-back
 spec:
+  type: LoadBalancer
   ports:
   - name: collinskube-back
     port: 80

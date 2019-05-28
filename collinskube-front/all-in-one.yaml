@@ -50,3 +50,13 @@ spec:
         image: xzjia/collinskube-front:0.1
         ports:
         - containerPort: 80
+        volumeMounts:
+        - name: nginx-conf
+          mountPath: /etc/nginx/conf.d
+      volumes:
+      - name: nginx-conf
+        configMap:
+          name: nginx-conf
+          items:
+            - key: nginx.conf
+              path: default.conf
