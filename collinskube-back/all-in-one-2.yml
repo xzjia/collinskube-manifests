@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: collinskube-back-2
+spec:
+  type: LoadBalancer
+  ports:
+  - name: collinskube-back-2
+    port: 80
+    targetPort: 8090
+    protocol: TCP
+  selector:
+    app: back-2
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: collinskube-back-2
+  labels:
+    app: back-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: back-2
+  template:
+    metadata:
+      labels:
+        app: back-2
+    spec:
+      containers:
+      - name: collinskube-back-2
+        image: xzjia/collinskube-back:0.2
+        env:
+        - name: DB_URL
+          valueFrom:
+            configMapKeyRef:
+              name: back-config
+              key: DB_URL
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: db-cred
+              key: username
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-cred
+              key: password
+        readinessProbe:
+          httpGet:
+            path: /view-api/actuator/health
+            port: server-port
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        ports:
+        - name: server-port
+          containerPort: 8090
